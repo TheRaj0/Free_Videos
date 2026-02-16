@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Free Video Libray</title>
+    <link rel="icon" href="icon.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+        
+        body { 
+            background-color: #050505; color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; 
+            -webkit-tap-highlight-color: transparent; overscroll-behavior-y: contain; 
+        }
+
+        /* Fixed Animation: Cleanest fold-out effect */
+        .group-content { 
+            display: grid;
+            grid-template-rows: 0fr;
+            opacity: 0;
+            pointer-events: none;
+            transition: grid-template-rows 0.5s cubic-bezier(0.33, 1, 0.68, 1), 
+                        opacity 0.3s ease;
+        }
+        .group-content.open { 
+            grid-template-rows: 1fr; 
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .group-inner { overflow: hidden; }
+
+        /* Component Styles */
+        .tag-red { background: rgba(220, 38, 38, 0.12); color: #ef4444; border: 1px solid rgba(220, 38, 38, 0.25); }
+        .tag-gray { background: rgba(39, 39, 42, 0.5); color: #71717a; border: 1px solid rgba(63, 63, 70, 0.4); }
+
+        .video-card { transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .video-card:active { transform: scale(0.97); background: rgba(255,255,255,0.05); }
+        
+        .play-btn {
+            background: rgba(220, 38, 38, 0.95);
+            box-shadow: 0 4px 20px rgba(220, 38, 38, 0.5);
+        }
+
+        .shimmer { 
+            background: linear-gradient(90deg, #0a0a0a 25%, #1a1a1a 50%, #0a0a0a 75%); 
+            background-size: 200% 100%; animation: shimmer 1.8s infinite linear; 
+        }
+        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+        /* Custom Scrollbar for Desktop */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: #222; border-radius: 10px; }
+    </style>
+</head>
+<body class="pb-12 select-none">
+
+    <header class="sticky top-0 z-50 bg-black/90 backdrop-blur-xl border-b border-white/5 px-4 py-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-1.5 h-5 bg-red-600 rounded-full shadow-[0_0_10px_rgba(220,38,38,0.3)]"></div>
+                <h1 class="font-800 text-xl tracking-tighter uppercase leading-none flex items-center">
+                    <span class="text-white">The</span>
+                    <span class="text-red-600 ml-1.5">Core</span>
+                </h1>
+            </div>
+            <button id="masterToggle" onclick="toggleAll()" class="bg-white text-black h-9 px-4 rounded-xl text-[10px] font-900 uppercase tracking-widest active:scale-95 transition-all shadow-lg">
+                Expand All
+            </button>
+        </div>
+    </header>
+
+    <main id="app" class="max-w-7xl mx-auto px-2 mt-6 space-y-4"></main>
+
+    <script>
+        const getYoutubeId = (url) => {
+            if(!url) return null;
+            const match = url.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/);
+            return (match && match[2].length === 11) ? match[2] : null;
+        };
+
+        async function fetchTitle(url, tid) {
+            try {
+                const res = await fetch(`https://noembed.com/embed?url=${encodeURIComponent(url)}`);
+                const data = await res.json();
+                const el = document.getElementById(tid);
+                if (data && data.title && el) {
+                    el.innerText = data.title;
+                    el.classList.remove('shimmer', 'h-4', 'w-full');
+                }
+            } catch (e) { 
+                const el = document.getElementById(tid);
+                if(el) el.innerText = "Lesson Module"; 
+            }
+        }
+
+        function toggleGroup(sid) {
+            const content = document.getElementById(`content-${sid}`);
+            const chev = document.getElementById(`chev-${sid}`);
+            if(!content) return;
+            const isOpen = content.classList.toggle('open');
+            chev.style.transform = isOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+        }
+
+        function toggleAll() {
+            const contents = document.querySelectorAll('.group-content');
+            const btn = document.getElementById('masterToggle');
+            const isAnyClosed = Array.from(contents).some(c => !c.classList.contains('open'));
+
+            contents.forEach(c => isAnyClosed ? c.classList.add('open') : c.classList.remove('open'));
+            document.querySelectorAll('.chev-icon').forEach(v => v.style.transform = isAnyClosed ? 'rotate(180deg)' : 'rotate(0deg)');
+            btn.innerText = isAnyClosed ? 'Collapse All' : 'Expand All';
+        }
+
+        async function init() {
+            const app = document.getElementById('app');
+            try {
+                const response = await fetch('data.json');
+                const data = await response.json();
+
+                data.forEach((group, gIdx) => {
+                    const sid = `g${gIdx}`;
+                    const videoUrls = group.videoUrls || []; // Edge Case: Handle missing arrays
+                    const count = videoUrls.length;
+                    const tagClass = count > 0 ? "tag-red" : "tag-gray";
+                    
+                    let videoHtml = '';
+                    videoUrls.forEach((url, vIdx) => {
+                        const vid = getYoutubeId(url);
+                        if (!vid) return;
+                        const tid = `t-${gIdx}-${vIdx}`;
+
+                        videoHtml += `
+                            <a href="${url}" target="_blank" rel="noopener noreferrer" class="video-card flex flex-col gap-3 p-3 bg-white/[0.02] rounded-2xl border border-white/5 group">
+                                <div class="relative aspect-video rounded-xl overflow-hidden bg-black">
+                                    <img loading="lazy" src="https://img.youtube.com/vi/${vid}/mqdefault.jpg" class="w-full h-full object-cover opacity-70 group-hover:opacity-90 transition-opacity">
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <div class="play-btn w-11 h-11 rounded-full flex items-center justify-center transition-transform group-active:scale-90">
+                                            <svg viewBox="0 0 24 24" class="w-5 h-5 fill-white ml-0.5"><path d="M8 5v14l11-7z"/></svg>
+                                        </div>
+                                    </div>
+                                    <div class="absolute top-2 left-2 bg-red-600 text-[8px] font-900 uppercase px-2 py-0.5 rounded shadow-lg text-white tracking-widest">Free</div>
+                                </div>
+                                <div class="px-1">
+                                    <h3 id="${tid}" class="shimmer h-4 w-full rounded text-[13px] font-bold text-zinc-100 line-clamp-2 leading-tight"></h3>
+                                    <div class="flex items-center justify-between mt-3">
+                                        <span class="text-[9px] text-red-500 font-900 uppercase italic tracking-tighter">Start Lesson →</span>
+                                        <span class="text-[9px] text-zinc-600 font-bold uppercase tracking-widest">L-${vIdx + 1}</span>
+                                    </div>
+                                </div>
+                            </a>
+                        `;
+                        fetchTitle(url, tid);
+                    });
+
+                    const section = document.createElement('section');
+                    section.className = "border border-white/5 rounded-[1.8rem] overflow-hidden bg-white/[0.01]";
+                    section.innerHTML = `
+                        <button onclick="toggleGroup('${sid}')" class="w-full flex items-center justify-between p-5 text-left active:bg-white/5 transition-colors">
+                            <div class="flex flex-col gap-1">
+                                <h2 class="text-[14px] font-700 text-white uppercase tracking-tight">${group.groupName}</h2>
+                                <span class="${tagClass} self-start text-[8px] px-2 py-0.5 rounded-full font-800 tracking-widest">
+                                    ${count} LESSONS
+                                </span>
+                            </div>
+                            <svg id="chev-${sid}" class="chev-icon w-5 h-5 text-zinc-600 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div id="content-${sid}" class="group-content">
+                            <div class="group-inner p-3 pt-0">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                                    ${count > 0 ? videoHtml : `<div class="col-span-full py-12 text-center"><p class="text-zinc-700 text-[10px] font-900 uppercase tracking-[0.2em]">Module Coming Soon</p></div>`}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    app.appendChild(section);
+                });
+            } catch (err) { 
+                console.error("Initialization Failed:", err);
+                document.getElementById('app').innerHTML = `<div class="p-10 text-center text-zinc-500 uppercase text-xs font-bold tracking-widest">Error Loading Data</div>`;
+            }
+        }
+        
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

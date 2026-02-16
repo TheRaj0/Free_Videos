@@ -1,0 +1,40 @@
+[
+  {
+    "groupName": "Physics",
+    "videoUrls": [
+      "https://www.youtube.com/watch?v=CCpL4gJPlGQ"
+    ]
+  },
+  {
+    "groupName": "Chemistry",
+    "videoUrls": []
+  },
+  {
+    "groupName": "General Math",
+    "videoUrls": []
+  },
+  {
+    "groupName": "Higher Math",
+    "videoUrls": []
+  },
+  {
+    "groupName": "Biology",
+    "videoUrls": []
+  },
+  {
+    "groupName": "Bangla - 1st",
+    "videoUrls": []
+  },
+  {
+    "groupName": "Bangla - 2nd",
+    "videoUrls": []
+  },
+  {
+    "groupName": "BGS",
+    "videoUrls": []
+  },
+  {
+    "groupName": "Islam",
+    "videoUrls": []
+  }
+]
