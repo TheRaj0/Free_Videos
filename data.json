@@ -1,43 +1,85 @@
 [
   {
     "groupName": "Physics",
-    "videoUrls": [
-      "https://www.youtube.com/watch?v=CCpL4gJPlGQ"
+    "classes": [
+      {
+        "classTitle": "৭ম অধ্যায়: তরঙ্গ ও শব্দ",
+        "video": {
+          "title": "MCQ Solving",
+          "link": "https://www.youtube.com/watch?v=CCpL4gJPlGQ"
+        },
+        "slides": {
+          "title": "Lecture Slides (PDF)",
+          "link": "https://drive.google.com/file/d/1oK-2D24JUR5rncjD_9Pi8UrpzdBcuCwC/view"
+        }
+      }
     ]
   },
   {
     "groupName": "Chemistry",
-    "videoUrls": []
+    "classes": []
   },
   {
     "groupName": "General Math",
-    "videoUrls": []
-  },
-  {
-    "groupName": "Higher Math",
-    "videoUrls": []
-  },
-  {
-    "groupName": "Biology",
-    "videoUrls": []
-  },
-  {
-    "groupName": "Bangla - 1st",
-    "videoUrls": [
-      "https://www.youtube.com/watch?v=Iwh8RMfi-ok",
-      "https://www.youtube.com/watch?v=ubI1TWKokzw"
+    "classes": [
+      {
+        "classTitle": "অধ্যায় ৮: বৃত্ত",
+        "video": {
+            "title": "MCQ Solving",
+            "link": "https://drive.google.com/file/d/1K6RzL_jJbybRI5snPuDbkBFvEHGIqzFG/view"
+        },
+        "slides": {
+            "title": "Lecture Slides (PDF)",
+            "link": "https://drive.google.com/file/u/0/d/1l_NWkyK0OWecsPwTcFz_OsOx85Rzxk22/view"
+        }
+      }
     ]
   },
   {
-    "groupName": "Bangla - 2nd",
-    "videoUrls": []
+    "groupName": "Higher Math",
+    "classes": []
+  },
+  {
+    "groupName": "Biology",
+    "classes": []
+  },
+  {
+    "groupName": "Bangla 1st Paper",
+    "classes": [
+      {
+        "classTitle": "গদ্য: প্রত্যুপকার",
+        "video": {
+          "title": "MCQ Solving",
+          "link": "https://www.youtube.com/watch?v=Iwh8RMfi-ok"
+        },
+        "slides": {
+          "title": "Lecture Slides (PDF)",
+          "link": "https://drive.google.com/file/u/0/d/1Xxj0xdqHgOu6-aqOxOFe1EMKYYmq1Kc1/view"
+        }
+      },
+      {
+        "classTitle": "কবিতা: কপোতাক্ষ নদ",
+        "video": {
+          "title": "MCQ Solving",
+          "link": "https://www.youtube.com/watch?v=ubI1TWKokzw"
+        },
+        "slides": {
+          "title": "Lecture Slides (PDF)",
+          "link": "https://drive.google.com/file/u/0/d/1jtsaeYH6jgPtIKCS2P4w20pR69Q2aTjr/view"
+        }
+      }
+    ]
+  },
+  {
+    "groupName": "Bangla 2nd Paper",
+    "classes": []
   },
   {
     "groupName": "BGS",
-    "videoUrls": []
+    "classes": []
   },
   {
     "groupName": "Islam",
-    "videoUrls": []
+    "classes": []
   }
 ]
