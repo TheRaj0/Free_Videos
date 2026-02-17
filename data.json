@@ -30,7 +30,7 @@
         },
         "slides": {
             "title": "Lecture Slides (PDF)",
-            "link": "https://drive.google.com/file/u/0/d/1l_NWkyK0OWecsPwTcFz_OsOx85Rzxk22/view"
+            "link": "https://drive.google.com/file/d/1l_NWkyK0OWecsPwTcFz_OsOx85Rzxk22/view"
         }
       }
     ]
@@ -41,7 +41,19 @@
   },
   {
     "groupName": "Biology",
-    "classes": []
+    "classes": [
+      {
+        "classTitle": "অধ্যায় ১৩: জীবের পরিবেশ",
+        "video": {
+          "title": "MCQ Solving",
+          "link": "https://drive.google.com/file/d/1iZZ6oRDlpvhEFXR12sh6nr2V5711JUS-/view"
+        },
+        "slides": {
+          "title": "Lecture Slides (PDF)",
+          "link": "https://drive.google.com/file/d/19hMXUxK7TyvupnM8cB0r4CHxJOisAmzJ/view"
+        }
+      }
+    ]
   },
   {
     "groupName": "Bangla 1st Paper",
@@ -54,7 +66,7 @@
         },
         "slides": {
           "title": "Lecture Slides (PDF)",
-          "link": "https://drive.google.com/file/u/0/d/1Xxj0xdqHgOu6-aqOxOFe1EMKYYmq1Kc1/view"
+          "link": "https://drive.google.com/file/d/1Xxj0xdqHgOu6-aqOxOFe1EMKYYmq1Kc1/view"
         }
       },
       {
@@ -65,7 +77,7 @@
         },
         "slides": {
           "title": "Lecture Slides (PDF)",
-          "link": "https://drive.google.com/file/u/0/d/1jtsaeYH6jgPtIKCS2P4w20pR69Q2aTjr/view"
+          "link": "https://drive.google.com/file/d/1jtsaeYH6jgPtIKCS2P4w20pR69Q2aTjr/view"
         }
       }
     ]
