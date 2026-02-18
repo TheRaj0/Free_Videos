@@ -17,7 +17,15 @@
   },
   {
     "groupName": "Chemistry",
-    "classes": []
+    "classes": [
+      {
+        "classTitle": "অধ্যায় ৪: পর্যায় সারণি",
+        "video": {
+          "title": "MCQ Solving",
+          "link": "https://drive.google.com/file/d/11yg8NgjpvJyc-pn2CauHZw58THPLrrA6/view"
+        }
+      }
+    ]
   },
   {
     "groupName": "General Math",
@@ -88,7 +96,15 @@
   },
   {
     "groupName": "BGS",
-    "classes": []
+    "classes": [
+      {
+        "classTitle": "ত্রয়োদশ অধ্যায়: বাংলাদেশের পরিবার কাঠামো ও সামাজিকীকরণ",
+        "video": {
+          "title": "MCQ Solving",
+          "link": "https://drive.google.com/file/d/1MryRXaqPGAyNVveN2epxPk-F5QzMLDLW/view"
+        }
+      }
+    ]
   },
   {
     "groupName": "Islam",
